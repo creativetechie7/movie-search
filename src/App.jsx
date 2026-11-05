@@ -8,13 +8,11 @@ import SearchBar from "./components/SearchBar.jsx";
 import MovieGrid from "./components/MovieGrid.jsx";
 
 export default function App() {
-  // TODO 3:
-  // Create state variables using useState:
-  // - movies: empty array
-  // - isLoading: true
-  // - error: empty string
-  // - searchTerm: "Batman"
-  // - watchlist: empty array
+  const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [searchTerm, setSearchTerm] = useState("Batman");
+  const [watchlist, setWatchlist] = useState([]);
 
   const API_KEY = "ENTER_OMDB_API_KEY_HERE";
 
