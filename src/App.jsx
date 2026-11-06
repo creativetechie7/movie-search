@@ -14,18 +14,18 @@ export default function App() {
   const [searchTerm, setSearchTerm] = useState("Batman");
   const [watchlist, setWatchlist] = useState([]);
 
-  const API_KEY = "ENTER_OMDB_API_KEY_HERE";
+  //const API_KEY = "ENTER_OMDB_API_KEY_HERE";
+
+  const API_KEY = import.meta.env.OMDB_API_KEY;
 
   const fetchMovies = async (query) => {
-    // TODO 4:
-    // Before fetching:
-    // - set isLoading to true
-    // - clear the error message
+    setIsLoading(true);
+    setError("");
 
     if (!API_KEY || API_KEY === "ENTER_OMDB_API_KEY_HERE") {
-      // Makes movies empty such as setMovies([])
-      // Call setError with your error message such as “No API key”
-      // Set isLoading to false;
+      setMovies([]);
+      setError("No API key");
+      setIsLoading(false);
       return;
     }
 
