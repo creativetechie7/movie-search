@@ -2,7 +2,7 @@
     Lab 8 - App.jsx starter
 ====================================================== */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './components/Header.jsx';
 import SearchBar from './components/SearchBar.jsx';
 import MovieGrid from './components/MovieGrid.jsx';
@@ -38,11 +38,12 @@ export default function App() {
         setMovies(data.Search);
       } else {
         setMovies([]);
-        setError(data.Error) || 'No movies found.';
+        setError(data.Error || 'No movies found.');
       }
     } catch (err) {
       setError('Failed to fetch movies.');
       setMovies([]);
+      console.log(err);
     } finally {
       setIsLoading(false);
     }
@@ -68,27 +69,41 @@ export default function App() {
     });
   };
 
+  /*Conditional Rendering for 11A */
+  let results;
+  if (isLoading) {
+    results = <p className="status">Loading...</p>;
+  } else if (error !== '') {
+    results = (
+      <p className="status error" role="alert">
+        {error}
+      </p>
+    );
+  } else if (movies.length === 0) {
+    results = <p className="status">No movies found.</p>;
+  } else {
+    results = <MovieGrid movies={movies} addToWatchlist={addToWatchlist} />;
+  }
   return (
     <div className="page">
       <Header title="Movie Search" searchTerm={searchTerm} />
       <SearchBar onSearch={handleSearch} />
 
       <main className="panel">
-        {/* TODO 11A:
-            Conditional rendering:
-            - If isLoading is true, show <p className="status">Loading...</p>
-            - Else if error is not empty, show <p className="status error">{error}</p>
-            - Else if movies.length === 0, show
-              <p className="status">No movies found.</p>
-            - Otherwise render <MovieGrid movies={movies} addToWatchlist={addToWatchlist} />
-        */}
+        {results}
 
-        {/* TODO 11B:
-            Add a watchlist section below the search results.
-            - Show a heading such as "My Watchlist"
-            - If watchlist.length === 0, show "No movies in watchlist yet."
-            - Otherwise map through watchlist and render each saved movie
-        */}
+        <h2>My Watchlist</h2>
+        {watchlist.length === 0 ? (
+          <p className="status">No movies in watchlist yet.</p>
+        ) : (
+          <ul>
+            {watchlist.map((movie) => (
+              <li key={movie.imdbID}>
+                {movie.Title} ({movie.Year})
+              </li>
+            ))}
+          </ul>
+        )}
       </main>
     </div>
   );
