@@ -16,9 +16,10 @@ export default function App() {
 
   //const API_KEY = "ENTER_OMDB_API_KEY_HERE";
 
-  const API_KEY = import.meta.env.OMDB_API_KEY;
+  const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 
   const fetchMovies = async (query) => {
+    console.log("1. fetchMovies called with:", query); //TODO: REMOVE before demo
     setIsLoading(true);
     setError("");
 
@@ -34,26 +35,22 @@ export default function App() {
 
       const response = await fetch(url);
       const data = await response.json();
-
-      // TODO 5:
-      // If data.Response is True, store data.Search in movies, use setMovies.
-      // Otherwise:
-      // - set movies to [] (like TODO 4)
-      // - set error to data.Error or “No movies found”
+      if (data.Response === "True") {
+        setMovies(data.Search);
+      } else {
+        setMovies([]);
+        setError(data.Error) || "No movies found.";
+      }
     } catch (err) {
-      // TODO 6:
-      // Set error to "Failed to fetch movies."
-      // Set movies to []
+      setError("Failed to fetch movies.");
+      setMovies([]);
     } finally {
-      // TODO 7:
-      // Set isLoading to false
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    // TODO 8:
-    // Call fetchMovies with searchTerm
-    // This should run on first load and when searchTerm changes.
+    fetchMovies(searchTerm);
   }, [searchTerm]);
 
   const handleSearch = (newSearchTerm) => {
