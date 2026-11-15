@@ -2,16 +2,16 @@
     Lab 8 - App.jsx starter
 ====================================================== */
 
-import React, { useEffect, useState } from "react";
-import Header from "./components/Header.jsx";
-import SearchBar from "./components/SearchBar.jsx";
-import MovieGrid from "./components/MovieGrid.jsx";
+import React, { useEffect, useState } from 'react';
+import Header from './components/Header.jsx';
+import SearchBar from './components/SearchBar.jsx';
+import MovieGrid from './components/MovieGrid.jsx';
 
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [searchTerm, setSearchTerm] = useState("Batman");
+  const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState('Batman');
   const [watchlist, setWatchlist] = useState([]);
 
   //const API_KEY = "ENTER_OMDB_API_KEY_HERE";
@@ -19,13 +19,12 @@ export default function App() {
   const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 
   const fetchMovies = async (query) => {
-    console.log("1. fetchMovies called with:", query); //TODO: REMOVE before demo
     setIsLoading(true);
-    setError("");
+    setError('');
 
-    if (!API_KEY || API_KEY === "ENTER_OMDB_API_KEY_HERE") {
+    if (!API_KEY || API_KEY === 'ENTER_OMDB_API_KEY_HERE') {
       setMovies([]);
-      setError("No API key");
+      setError('No API key');
       setIsLoading(false);
       return;
     }
@@ -35,14 +34,14 @@ export default function App() {
 
       const response = await fetch(url);
       const data = await response.json();
-      if (data.Response === "True") {
+      if (data.Response === 'True') {
         setMovies(data.Search);
       } else {
         setMovies([]);
-        setError(data.Error) || "No movies found.";
+        setError(data.Error) || 'No movies found.';
       }
     } catch (err) {
-      setError("Failed to fetch movies.");
+      setError('Failed to fetch movies.');
       setMovies([]);
     } finally {
       setIsLoading(false);
@@ -54,9 +53,7 @@ export default function App() {
   }, [searchTerm]);
 
   const handleSearch = (newSearchTerm) => {
-    // TODO 9:
-    // Update searchTerm using the value received from SearchBar.
-    // Do not call fetchMovies directly here.
+    setSearchTerm(newSearchTerm);
   };
 
   const addToWatchlist = (movie) => {
@@ -74,10 +71,7 @@ export default function App() {
   return (
     <div className="page">
       <Header title="Movie Search" searchTerm={searchTerm} />
-
-      {/* TODO 10:
-          Render SearchBar and pass handleSearch as onSearch
-      */}
+      <SearchBar onSearch={handleSearch} />
 
       <main className="panel">
         {/* TODO 11A:

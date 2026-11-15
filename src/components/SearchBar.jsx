@@ -2,30 +2,36 @@
     Lab 8 - SearchBar.jsx starter
 ====================================================== */
 
-import React, { useState } from "react";
+import { useState } from 'react';
 
 export default function SearchBar({ onSearch }) {
-    // TODO 13: 
-    // Create local state variable inputValue initialized to "" 
+  const [inputValue, setInputValue] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-        // TODO 14: 
-        // If inputValue.trim() is not empty: 
-        // - call onSearch with inputValue.trim() 
-        // - clear the input by setting inputValue to "" 
-    };
+    if (inputValue.trim() !== '') {
+      onSearch(inputValue.trim());
+      setInputValue('');
+    }
+  };
 
-    return (
-        <form className="searchForm" onSubmit={handleSubmit}>
-            {/* TODO 15: 
-                Create a controlled input: 
-                - value should be inputValue 
-                - onChange should update inputValue 
-                - add a helpful placeholder
-            */}
-            <button type="submit" className="primary">Search Movies</button>
-        </form>
-    );
+  return (
+    <form className="searchForm" onSubmit={handleSubmit}>
+      <label htmlFor="movie-search" className="visuallyHidden">
+        Search for a movie title
+      </label>
+      <input
+        id="movie-search"
+        type="search"
+        placeholder="e.g. Batman"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      {/*e = event - used to set the event target value (search term)*/}
+      <button type="submit" className="primary">
+        Search Movies
+      </button>
+    </form>
+  );
 }

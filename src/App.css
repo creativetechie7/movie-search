@@ -1,4 +1,4 @@
-/* ========================================================= 
+/* =========================================================
     Lab 8 - App.css starter
 ========================================================= */
 
@@ -140,6 +140,18 @@ img {
 .cardContent p {
   margin: 0;
   color: #46627f;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden; /* Hide the element visually */
+  clip: rect(0, 0, 0, 0); /* Clip the element to hide it */
+  white-space: nowrap; /* Prevents the text from wrapping */
+  border: 0;
 }
 
 @media (max-width: 640px) {
