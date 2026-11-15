@@ -3,14 +3,11 @@
 ====================================================== */
 
 export default function Header({ title, searchTerm }) {
-    /* TODO 12: Create the entire Header component.
-    
-       Requirements:
-        - Show the title prop in an h1
-        - Show a one-sentence description
-        - Show the current search term somewhere in the header
-        - Replace return null with your JSX
-    */
-
-    return null;
+  return (
+    <header className="hero">
+      <h1>{title}</h1>
+      <p>Search movies, see more information, save your watchlist</p>
+      <p className="heroMeta">Showing results for {searchTerm}</p>
+    </header>
+  );
 }
