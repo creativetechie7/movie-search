@@ -142,6 +142,11 @@ img {
   color: #46627f;
 }
 
+.cardContent button {
+  margin-top: 12px;
+  width: 100%;
+}
+
 .visuallyHidden {
   position: absolute;
   width: 1px;
